@@ -25,7 +25,7 @@ public class Main {
             System.out.println(arr[i]);
         }        
         System.out.println("--------------------");        
-        mergeSort(arr);        
+        mergeSort2(arr);        
         for (int e:arr){
             System.out.println(e);
         }
@@ -70,6 +70,37 @@ public class Main {
             }
         } 
     }
-    
+    public static  void mergeSort2(int arr[]){
+        int size = arr.length;
+        Dim d = new Dim(0,size-1);
+        int arrNew[] = new int[size];
+        mergeSort2(arr, arrNew, d);
+        arr = arrNew;
+    }
+    public static void mergeSort2(int arr[],int arrNew[], Dim d){
+        int size = d.rBnd - d.lBnd + 1;
+        if(size>1){
+            Dim ld  = new Dim(d.lBnd, d.lBnd + size/2-1);
+            Dim rd  = new Dim( d.lBnd + size/2, d.rBnd);  
+            mergeSort2(arr,arrNew, ld);
+            mergeSort2(arr,arrNew, rd);
+            //int newArr[] = new int[size];
+            int iL = ld.lBnd;
+            int iR = rd.lBnd;
+            for(int i = d.lBnd; i<=d.rBnd; i++){
+                if(iL>ld.rBnd){
+                    arrNew[i] = arr[iR];
+                }else if(iR>rd.rBnd){
+                    arrNew[i] = arr[iL];
+                }else if(arr[iL]<arr[iR]){
+                    arrNew[i] = arr[iL++];
+                }else{
+                    arrNew[i] = arr[iR++];
+                }                
+            }            
+        }else{
+            arrNew[d.lBnd] = arr[d.lBnd];
+        } 
+    }
     
 }
